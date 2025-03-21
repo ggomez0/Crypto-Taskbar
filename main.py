@@ -27,20 +27,20 @@ class CryptoTaskbarMonitor:
         main_frame = ttk.Frame(self.root, padding=10)
         main_frame.pack(fill=tk.BOTH, expand=True)
         
-        ttk.Label(main_frame, text="Selecciona la criptomoneda:").pack(pady=5)
+        ttk.Label(main_frame, text="Choose a crypto:").pack(pady=5)
         
         self.crypto_var = tk.StringVar(value=self.crypto)
         crypto_combo = ttk.Combobox(main_frame, textvariable=self.crypto_var)
         crypto_combo['values'] = ("bitcoin", "ethereum", 'bnb', 'solana', 'polkadot')
         crypto_combo.pack(pady=5, fill=tk.X)
         
-        ttk.Label(main_frame, text="Intervalo de actualización (segundos):").pack(pady=5)
+        ttk.Label(main_frame, text="Update interval (seconds):").pack(pady=5)
         
         self.interval_var = tk.IntVar(value=self.update_interval)
         interval_entry = ttk.Spinbox(main_frame, from_=10, to=600, increment=10, textvariable=self.interval_var)
         interval_entry.pack(pady=5, fill=tk.X)
         
-        start_button = tk.Button(main_frame, text="Iniciar Monitoreo", command=self.start_monitoring)
+        start_button = tk.Button(main_frame, text="Start Monitoring", command=self.start_monitoring)
         start_button.pack(pady=5)
         
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
@@ -76,11 +76,11 @@ class CryptoTaskbarMonitor:
                 
                 self.previous_price = self.price
                 self.price = price
-                print(f"{self.crypto} actualizado: {self.price}")
+                print(f"{self.crypto} updated: {self.price}")
             else:
-                print(f"Error al obtener datos: {response.status_code}")
+                print(f"Error getting data: {response.status_code}")
         except Exception as e:
-            print(f"Error al obtener el precio: {e}")
+            print(f"Error getting price: {e}")
             self.price = "Error"
         
         self.last_update_time = time.time()
@@ -107,8 +107,8 @@ class CryptoTaskbarMonitor:
         self.fetch_price()
         
         menu = pystray.Menu(
-            pystray.MenuItem("Actualizar ahora", self.force_update),
-            pystray.MenuItem("Salir", self.exit_app)
+            pystray.MenuItem("Update now", self.force_update),
+            pystray.MenuItem("Exit", self.exit_app)
         )
         
         icon_image = self.create_simple_price_icon()
